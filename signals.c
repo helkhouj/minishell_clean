@@ -30,19 +30,7 @@ static void	handle_sigquit(int sig)
 	g_signal = SIGQUIT;
 }
 
-static void	handle_sigint_child(int sig)
-{
-	(void)sig;
-	g_signal = SIGINT;
-	write(STDOUT_FILENO, "\n", 1);
-}
 
-static void	handle_sigquit_child(int sig)
-{
-	(void)sig;
-	g_signal = SIGQUIT;
-	write(STDOUT_FILENO, "Quit (core dumped)\n", 19);
-}
 
 void	setup_signals(void)
 {
