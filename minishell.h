@@ -17,18 +17,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <string.h>
-# ifdef _WIN32
-#  include <process.h>
-#  include <io.h>
-#  define pipe(fds) _pipe(fds, 256, O_BINARY)
-#  define fork() -1
-#  define waitpid(pid, status, options) -1
-#  define WIFEXITED(status) 1
-#  define WEXITSTATUS(status) 0
-#  define WTERMSIG(status) 0
-# else
-#  include <sys/wait.h>
-# endif
+# include <sys/wait.h>
 # include <sys/stat.h>
 # include <fcntl.h>
 # include <errno.h>
