@@ -13,6 +13,7 @@
 t_token	*create_token(t_token_type type, char *value)
 {
 	t_token	*token;
+
 	token = malloc(sizeof(t_token));
 	if (!token)
 		return (NULL);
@@ -21,10 +22,12 @@ t_token	*create_token(t_token_type type, char *value)
 	token->next = NULL;
 	return (token);
 }
+
 void	free_tokens(t_token *tokens)
 {
 	t_token	*current;
 	t_token	*next;
+
 	current = tokens;
 	while (current)
 	{

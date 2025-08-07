@@ -13,6 +13,7 @@
 int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
 	size_t	i;
+
 	if (!s1 || !s2)
 		return (-1);
 	if (n == 0)
@@ -22,6 +23,7 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 		i++;
 	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
 }
+
 char	*ft_strchr(const char *s, int c)
 {
 	if (!s)
@@ -36,10 +38,12 @@ char	*ft_strchr(const char *s, int c)
 		return ((char *)s);
 	return (NULL);
 }
+
 static int	count_words(char const *s, char c)
 {
 	int	count;
 	int	in_word;
+
 	count = 0;
 	in_word = 0;
 	while (*s)
@@ -55,10 +59,12 @@ static int	count_words(char const *s, char c)
 	}
 	return (count);
 }
+
 static char	*get_next_word(char const **s, char c)
 {
 	char const	*start;
 	size_t		len;
+
 	while (**s == c)
 		(*s)++;
 	start = *s;
@@ -67,11 +73,13 @@ static char	*get_next_word(char const **s, char c)
 	len = *s - start;
 	return (ft_substr(start, 0, len));
 }
+
 char	**ft_split(char const *s, char c)
 {
 	char	**result;
 	int		word_count;
 	int		i;
+
 	if (!s)
 		return (NULL);
 	word_count = count_words(s, c);

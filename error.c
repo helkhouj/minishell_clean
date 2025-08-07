@@ -20,6 +20,7 @@ void	ft_putstr_fd(char *s, int fd)
 		s++;
 	}
 }
+
 void	ft_putendl_fd(char *s, int fd)
 {
 	if (!s)
@@ -27,9 +28,11 @@ void	ft_putendl_fd(char *s, int fd)
 	ft_putstr_fd(s, fd);
 	write(fd, "\n", 1);
 }
+
 void	free_array(char **arr)
 {
 	int	i;
+
 	if (!arr)
 		return ;
 	i = 0;
@@ -40,11 +43,13 @@ void	free_array(char **arr)
 	}
 	free(arr);
 }
+
 void	error_exit(char *msg)
 {
 	ft_putendl_fd(msg, STDERR_FILENO);
 	exit(EXIT_FAILURE);
 }
+
 void	print_error(char *cmd, char *msg)
 {
 	ft_putstr_fd("minishell: ", STDERR_FILENO);

@@ -13,6 +13,7 @@
 t_ast	*create_ast_node(t_node_type type)
 {
 	t_ast	*node;
+
 	node = malloc(sizeof(t_ast));
 	if (!node)
 		return (NULL);
@@ -22,10 +23,12 @@ t_ast	*create_ast_node(t_node_type type)
 	node->right = NULL;
 	return (node);
 }
+
 void	free_ast(t_ast *ast)
 {
 	t_redir	*redir;
 	t_redir	*next_redir;
+
 	if (!ast)
 		return ;
 	if (ast->cmd)

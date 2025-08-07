@@ -13,6 +13,7 @@
 size_t	ft_strlen(const char *s)
 {
 	size_t	len;
+
 	if (!s)
 		return (0);
 	len = 0;
@@ -20,11 +21,13 @@ size_t	ft_strlen(const char *s)
 		len++;
 	return (len);
 }
+
 char	*ft_strdup(const char *s)
 {
 	char	*dup;
 	size_t	len;
 	size_t	i;
+
 	if (!s)
 		return (NULL);
 	len = ft_strlen(s);
@@ -40,11 +43,13 @@ char	*ft_strdup(const char *s)
 	dup[i] = '\0';
 	return (dup);
 }
+
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
 	char	*substr;
 	size_t	i;
 	size_t	s_len;
+
 	if (!s)
 		return (NULL);
 	s_len = ft_strlen(s);
@@ -64,12 +69,14 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	substr[i] = '\0';
 	return (substr);
 }
+
 char	*ft_strjoin(char const *s1, char const *s2)
 {
 	char	*joined;
 	size_t	len1;
 	size_t	len2;
 	size_t	i;
+
 	if (!s1 || !s2)
 		return (NULL);
 	len1 = ft_strlen(s1);
@@ -91,9 +98,11 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	joined[i] = '\0';
 	return (joined);
 }
+
 int	ft_strcmp(const char *s1, const char *s2)
 {
 	size_t	i;
+
 	if (!s1 || !s2)
 		return (-1);
 	i = 0;

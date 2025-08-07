@@ -13,6 +13,7 @@
 static t_redir	*create_redir(t_node_type type, char *file)
 {
 	t_redir	*redir;
+
 	redir = malloc(sizeof(t_redir));
 	if (!redir)
 		return (NULL);
@@ -22,9 +23,11 @@ static t_redir	*create_redir(t_node_type type, char *file)
 	redir->next = NULL;
 	return (redir);
 }
+
 static t_cmd	*create_cmd(void)
 {
 	t_cmd	*cmd;
+
 	cmd = malloc(sizeof(t_cmd));
 	if (!cmd)
 		return (NULL);
@@ -32,9 +35,11 @@ static t_cmd	*create_cmd(void)
 	cmd->redirs = NULL;
 	return (cmd);
 }
+
 static void	add_redir_to_list(t_redir **redirs, t_redir *new_redir)
 {
 	t_redir	*last;
+
 	if (*redirs)
 	{
 		last = *redirs;
@@ -45,6 +50,7 @@ static void	add_redir_to_list(t_redir **redirs, t_redir *new_redir)
 	else
 		*redirs = new_redir;
 }
+
 static t_ast	*parse_command(t_token **tokens)
 {
 	t_ast		*node;
@@ -52,6 +58,7 @@ static t_ast	*parse_command(t_token **tokens)
 	char		**args;
 	int			arg_count;
 	t_redir		*redirs;
+
 	node = create_ast_node(NODE_COMMAND);
 	if (!node)
 		return (NULL);
@@ -78,6 +85,7 @@ static t_ast	*parse_command(t_token **tokens)
 			if (current && current->type == TOKEN_WORD)
 			{
 				t_redir	*new_redir;
+
 				new_redir = create_redir(current->type - TOKEN_REDIR_IN
 					+ NODE_REDIR_IN, current->value);
 				add_redir_to_list(&redirs, new_redir);
@@ -91,11 +99,13 @@ static t_ast	*parse_command(t_token **tokens)
 	*tokens = current;
 	return (node);
 }
+
 t_ast	*parse(t_token *tokens)
 {
 	t_ast	*left;
 	t_ast	*pipe_node;
 	t_token	*current;
+
 	if (!tokens || tokens->type == TOKEN_EOF)
 		return (NULL);
 	current = tokens;

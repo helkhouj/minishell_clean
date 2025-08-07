@@ -17,17 +17,20 @@ static void	init_shell(t_shell *shell, char **envp)
 	shell->stdin_fd = dup(STDIN_FILENO);
 	shell->stdout_fd = dup(STDOUT_FILENO);
 }
+
 static void	cleanup_shell(t_shell *shell)
 {
 	free_env(shell->env);
 	close(shell->stdin_fd);
 	close(shell->stdout_fd);
 }
+
 static char	*expand_command_args(char **args, t_shell *shell)
 {
 	char	*expanded;
 	char	*temp;
 	int		i;
+
 	if (!args)
 		return (NULL);
 	i = 0;
@@ -44,11 +47,13 @@ static char	*expand_command_args(char **args, t_shell *shell)
 	}
 	return (NULL);
 }
+
 static void	process_input(char *input, t_shell *shell)
 {
 	t_token	*tokens;
 	t_ast	*ast;
 	int		exit_code;
+
 	if (!input || !*input)
 		return ;
 	tokens = tokenize(input);
@@ -65,10 +70,12 @@ static void	process_input(char *input, t_shell *shell)
 	restore_redirections(shell->stdin_fd, shell->stdout_fd);
 	free_ast(ast);
 }
+
 int	main(int argc, char **argv, char **envp)
 {
 	t_shell	shell;
 	char	*input;
+
 	(void)argc;
 	(void)argv;
 	init_shell(&shell, envp);

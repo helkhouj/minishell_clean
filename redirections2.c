@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signals.c                                          :+:      :+:    :+:   */
+/*   redirections2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: student <student@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,27 +10,41 @@
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"
-int	g_signal = 0;
 
-void	handle_sigint(int sig)
+int	setup_redirections(t_redir *redirs)
 {
-	(void)sig;
-	g_signal = SIGINT;
-	write(STDOUT_FILENO, "\n", 1);
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	rl_redisplay();
+	t_redir	*current;
+
+	current = redirs;
+	while (current)
+	{
+		if (current->type == NODE_REDIR_IN)
+		{
+			if (setup_input_redirection(current->file) == -1)
+				return (-1);
+		}
+		else if (current->type == NODE_REDIR_OUT)
+		{
+			if (setup_output_redirection(current->file, 0) == -1)
+				return (-1);
+		}
+		else if (current->type == NODE_REDIR_APPEND)
+		{
+			if (setup_output_redirection(current->file, 1) == -1)
+				return (-1);
+		}
+		else if (current->type == NODE_REDIR_HEREDOC)
+		{
+			if (setup_heredoc_redirection(current->file) == -1)
+				return (-1);
+		}
+		current = current->next;
+	}
+	return (0);
 }
 
-static void	handle_sigquit(int sig)
+void	restore_redirections(int stdin_fd, int stdout_fd)
 {
-	(void)sig;
-	g_signal = SIGQUIT;
-}
-
-void	setup_signals(void)
-{
-	signal(SIGINT, handle_sigint);
-	signal(SIGQUIT, handle_sigquit);
-}
-
+	dup2(stdin_fd, STDIN_FILENO);
+	dup2(stdout_fd, STDOUT_FILENO);
+} 

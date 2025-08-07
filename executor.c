@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"
+
 static char	*find_command_path(char *cmd, t_env *env)
 {
 	char	*path_env;
@@ -17,6 +18,7 @@ static char	*find_command_path(char *cmd, t_env *env)
 	char	*full_path;
 	char	*temp;
 	int		i;
+
 	if (!cmd)
 		return (NULL);
 	if (ft_strchr(cmd, '/'))
@@ -44,12 +46,14 @@ static char	*find_command_path(char *cmd, t_env *env)
 	free_array(paths);
 	return (NULL);
 }
+
 int	execute_command(t_ast *ast, t_shell *shell)
 {
 	char	*cmd_path;
 	char	**env_array;
 	int		status;
 	pid_t	pid;
+
 	if (!ast || !ast->cmd || !ast->cmd->args || !ast->cmd->args[0])
 		return (127);
 	if (is_builtin(ast->cmd->args[0]))
@@ -81,15 +85,18 @@ int	execute_command(t_ast *ast, t_shell *shell)
 	free(cmd_path);
 	return (1);
 }
+
 static void	setup_child_pipe(int pipe_fd[2], int read_end, int write_end)
 {
 	close(pipe_fd[read_end]);
 	dup2(pipe_fd[write_end], write_end == 1 ? STDOUT_FILENO : STDIN_FILENO);
 	close(pipe_fd[write_end]);
 }
+
 static int	execute_left_child(t_ast *ast, t_shell *shell, int pipe_fd[2])
 {
 	pid_t	pid;
+
 	pid = fork();
 	if (pid == 0)
 	{
@@ -98,9 +105,11 @@ static int	execute_left_child(t_ast *ast, t_shell *shell, int pipe_fd[2])
 	}
 	return (pid);
 }
+
 static int	execute_right_child(t_ast *ast, t_shell *shell, int pipe_fd[2])
 {
 	pid_t	pid;
+
 	pid = fork();
 	if (pid == 0)
 	{
@@ -109,12 +118,14 @@ static int	execute_right_child(t_ast *ast, t_shell *shell, int pipe_fd[2])
 	}
 	return (pid);
 }
+
 int	execute_pipeline(t_ast *ast, t_shell *shell)
 {
 	int		pipe_fd[2];
 	pid_t	left_pid;
 	pid_t	right_pid;
 	int		status;
+
 	if (pipe(pipe_fd) == -1)
 		return (1);
 	left_pid = execute_left_child(ast, shell, pipe_fd);
@@ -126,58 +137,5 @@ int	execute_pipeline(t_ast *ast, t_shell *shell)
 	if (WIFEXITED(status))
 		return (WEXITSTATUS(status));
 	return (128 + WTERMSIG(status));
-}
-static int	count_env_vars(t_env *env)
-{
-	t_env	*current;
-	int		count;
-	count = 0;
-	current = env;
-	while (current)
-	{
-		count++;
-		current = current->next;
-	}
-	return (count);
-}
-static char	*create_env_string(char *key, char *value)
-{
-	char	*temp;
-	char	*result;
-	temp = ft_strjoin(key, "=");
-	result = ft_strjoin(temp, value);
-	free(temp);
-	return (result);
-}
-char	**env_to_array(t_env *env)
-{
-	t_env	*current;
-	char	**array;
-	int		count;
-	int		i;
-	count = count_env_vars(env);
-	array = malloc((count + 1) * sizeof(char *));
-	if (!array)
-		return (NULL);
-	current = env;
-	i = 0;
-	while (current && i < count)
-	{
-		array[i] = create_env_string(current->key, current->value);
-		current = current->next;
-		i++;
-	}
-	array[i] = NULL;
-	return (array);
-}
-int	execute_ast(t_ast *ast, t_shell *shell)
-{
-	if (!ast)
-		return (0);
-	if (ast->type == NODE_COMMAND)
-		return (execute_command(ast, shell));
-	else if (ast->type == NODE_PIPE)
-		return (execute_pipeline(ast, shell));
-	return (0);
 }
 

@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signals.c                                          :+:      :+:    :+:   */
+/*   builtins3.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: student <student@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,27 +10,21 @@
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"
-int	g_signal = 0;
 
-void	handle_sigint(int sig)
+int	builtin_exit(char **args, t_shell *shell)
 {
-	(void)sig;
-	g_signal = SIGINT;
-	write(STDOUT_FILENO, "\n", 1);
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	rl_redisplay();
-}
+	int	exit_code;
 
-static void	handle_sigquit(int sig)
-{
-	(void)sig;
-	g_signal = SIGQUIT;
-}
-
-void	setup_signals(void)
-{
-	signal(SIGINT, handle_sigint);
-	signal(SIGQUIT, handle_sigquit);
-}
-
+	exit_code = shell->exit_code;
+	if (args[1])
+	{
+		exit_code = atoi(args[1]);
+		if (args[2])
+		{
+			print_error("exit", "too many arguments");
+			return (1);
+		}
+	}
+	printf("exit\n");
+	exit(exit_code);
+} 

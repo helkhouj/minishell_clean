@@ -10,10 +10,12 @@
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"
+
 static char	*get_var_name(char *str, int *len)
 {
 	int		i;
 	char	*name;
+
 	i = 0;
 	if (str[i] == '?')
 	{
@@ -30,9 +32,11 @@ static char	*get_var_name(char *str, int *len)
 	name = ft_substr(str, 0, i);
 	return (name);
 }
+
 static char	*get_var_value(char *var_name, t_shell *shell)
 {
 	char	*value;
+
 	if (!var_name)
 		return (ft_strdup("$"));
 	if (ft_strcmp(var_name, "?") == 0)
@@ -48,11 +52,13 @@ static char	*get_var_value(char *var_name, t_shell *shell)
 		return (ft_strdup(""));
 	return (ft_strdup(value));
 }
+
 static char	*expand_single_var(char *str, int *pos, t_shell *shell)
 {
 	char	*var_name;
 	char	*var_value;
 	int		var_len;
+
 	if (str[*pos] != '$')
 		return (NULL);
 	(*pos)++;
@@ -62,9 +68,11 @@ static char	*expand_single_var(char *str, int *pos, t_shell *shell)
 	free(var_name);
 	return (var_value);
 }
+
 static char	*join_parts(char *result, char *new_part)
 {
 	char	*joined;
+
 	if (!result)
 		return (new_part);
 	if (!new_part)
@@ -73,48 +81,5 @@ static char	*join_parts(char *result, char *new_part)
 	free(result);
 	free(new_part);
 	return (joined);
-}
-static void	process_variable_expansion(char *str, int *i, int *start, 
-		char **result, t_shell *shell)
-{
-	char	*temp;
-	char	*var_value;
-	if (*i > *start)
-	{
-		temp = ft_substr(str, *start, *i - *start);
-		*result = join_parts(*result, temp);
-	}
-	var_value = expand_single_var(str, i, shell);
-	*result = join_parts(*result, var_value);
-	*start = *i;
-}
-static void	process_remaining_text(char *str, int i, int start, char **result)
-{
-	char	*temp;
-	if (i > start)
-	{
-		temp = ft_substr(str, start, i - start);
-		*result = join_parts(*result, temp);
-	}
-}
-char	*expand_variables(char *str, t_shell *shell)
-{
-	char	*result;
-	int		i;
-	int		start;
-	if (!str)
-		return (NULL);
-	result = ft_strdup("");
-	i = 0;
-	start = 0;
-	while (str[i])
-	{
-		if (str[i] == '$')
-			process_variable_expansion(str, &i, &start, &result, shell);
-		else
-			i++;
-	}
-	process_remaining_text(str, i, start, &result);
-	return (result);
 }
 

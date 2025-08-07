@@ -17,14 +17,20 @@ SRCS = main.c \
 	utils2.c \
 	tokenizer.c \
 	tokenizer2.c \
+	tokenizer3.c \
 	parser.c \
 	parser2.c \
 	environment.c \
+	environment2.c \
 	expansion.c \
+	expansion2.c \
 	executor.c \
+	executor2.c \
 	builtins.c \
 	builtins2.c \
+	builtins3.c \
 	redirections.c \
+	redirections2.c \
 	signals.c \
 	error.c
 
