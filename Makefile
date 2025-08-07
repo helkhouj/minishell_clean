@@ -21,7 +21,6 @@ SRCS = main.c \
 	parser2.c \
 	environment.c \
 	environment2.c \
-	expansion.c \
 	expansion2.c \
 	executor.c \
 	executor2.c \
