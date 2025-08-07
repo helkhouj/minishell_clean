@@ -11,6 +11,96 @@
 /* ************************************************************************** */
 #include "minishell.h"
 
+static void	add_token(t_token **tokens, t_token *new_token)
+{
+	t_token	*current;
+
+	if (!*tokens)
+	{
+		*tokens = new_token;
+		return ;
+	}
+	current = *tokens;
+	while (current->next)
+		current = current->next;
+	current->next = new_token;
+}
+
+static char	*extract_quoted_string(char **input, char quote)
+{
+	char	*start;
+	char	*end;
+	char	*result;
+
+	start = *input + 1;
+	end = start;
+	while (*end && *end != quote)
+		end++;
+	if (*end != quote)
+		return (NULL);
+	result = ft_substr(start, 0, end - start);
+	*input = end + 1;
+	return (result);
+}
+
+static t_token_type	get_operator_type(char **input)
+{
+	if (**input == '|')
+	{
+		(*input)++;
+		return (TOKEN_PIPE);
+	}
+	if (**input == '<')
+	{
+		if (*(*input + 1) == '<')
+		{
+			*input += 2;
+			return (TOKEN_REDIR_HEREDOC);
+		}
+		(*input)++;
+		return (TOKEN_REDIR_IN);
+	}
+	if (**input == '>')
+	{
+		if (*(*input + 1) == '>')
+		{
+			*input += 2;
+			return (TOKEN_REDIR_APPEND);
+		}
+		(*input)++;
+		return (TOKEN_REDIR_OUT);
+	}
+	return (TOKEN_WORD);
+}
+
+static void	skip_whitespace(char **input)
+{
+	while (**input == ' ' || **input == '\t')
+		(*input)++;
+}
+
+static void	process_quoted_string(char **input, t_token **tokens)
+{
+	char	*word;
+
+	word = extract_quoted_string(input, **input);
+	if (!word)
+	{
+		free_tokens(*tokens);
+		*tokens = NULL;
+		return ;
+	}
+	add_token(tokens, create_token(TOKEN_WORD, word));
+}
+
+static void	process_operator(char **input, t_token **tokens)
+{
+	t_token_type	type;
+
+	type = get_operator_type(input);
+	add_token(tokens, create_token(type, ft_strdup("")));
+}
+
 static void	process_word(char **input, t_token **tokens)
 {
 	char	*word_start;
