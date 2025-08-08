@@ -10,10 +10,12 @@
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"
+
 int	builtin_cd(char **args, t_shell *shell)
 {
 	char	*path;
 	char	*home;
+
 	if (!args[1])
 	{
 		home = get_env_value(shell->env, "HOME");
@@ -33,6 +35,7 @@ int	builtin_cd(char **args, t_shell *shell)
 	}
 	return (0);
 }
+
 static int	is_valid_identifier(char *str)
 {
 	int	i;
@@ -53,11 +56,13 @@ static int	is_valid_identifier(char *str)
 	}
 	return (1);
 }
+
 static int	process_export_arg(char *arg, t_shell *shell)
 {
 	char	*equals;
 	char	*key;
 	char	*value;
+
 	equals = ft_strchr(arg, '=');
 	if (equals)
 	{
@@ -81,9 +86,11 @@ static int	process_export_arg(char *arg, t_shell *shell)
 	free(value);
 	return (0);
 }
+
 int	builtin_export(char **args, t_shell *shell)
 {
 	int	i;
+
 	if (!args[1])
 		return (builtin_env(shell));
 	i = 1;
@@ -95,9 +102,11 @@ int	builtin_export(char **args, t_shell *shell)
 	}
 	return (0);
 }
+
 int	builtin_unset(char **args, t_shell *shell)
 {
 	int	i;
+
 	if (!args[1])
 		return (0);
 	i = 1;
