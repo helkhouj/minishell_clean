@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"
-
 int	is_builtin(char *cmd)
 {
 	if (!cmd)
@@ -31,7 +30,6 @@ int	is_builtin(char *cmd)
 		return (1);
 	return (0);
 }
-
 int	execute_builtin(char **args, t_shell *shell)
 {
 	if (!args || !args[0])
@@ -52,12 +50,10 @@ int	execute_builtin(char **args, t_shell *shell)
 		return (builtin_exit(args, shell));
 	return (1);
 }
-
 int	builtin_echo(char **args)
 {
 	int	newline;
 	int	i;
-
 	newline = 1;
 	i = 1;
 	if (args[1] && ft_strcmp(args[1], "-n") == 0)
@@ -76,11 +72,9 @@ int	builtin_echo(char **args)
 		ft_putstr_fd("\n", STDOUT_FILENO);
 	return (0);
 }
-
 int	builtin_pwd(void)
 {
 	char	*cwd;
-
 	cwd = getcwd(NULL, 0);
 	if (!cwd)
 	{
@@ -91,11 +85,9 @@ int	builtin_pwd(void)
 	free(cwd);
 	return (0);
 }
-
 int	builtin_env(t_shell *shell)
 {
 	t_env	*current;
-
 	current = shell->env;
 	while (current)
 	{
