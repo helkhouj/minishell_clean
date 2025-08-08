@@ -27,4 +27,4 @@ int	builtin_exit(char **args, t_shell *shell)
 	}
 	printf("exit\n");
 	exit(exit_code);
-} 
+}

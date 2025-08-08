@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   redirections2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: student <student@student@student.42.fr>            +#+  +:+       +#+        */
+/*   By: student <student@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 10:00:00 by student           #+#    #+#             */
 /*   Updated: 2024/01/15 10:00:00 by student          ###   ########.fr       */
@@ -143,4 +143,4 @@ void	restore_redirections(int stdin_fd, int stdout_fd)
 {
 	dup2(stdin_fd, STDIN_FILENO);
 	dup2(stdout_fd, STDOUT_FILENO);
-} 
+}

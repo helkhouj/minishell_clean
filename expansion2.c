@@ -83,7 +83,7 @@ static char	*join_parts(char *result, char *new_part)
 	return (joined);
 }
 
-static void	process_variable_expansion(char *str, int *i, int *start, 
+static void	process_variable_expansion(char *str, int *i, int *start,
 		char **result, t_shell *shell)
 {
 	char	*temp;
@@ -130,4 +130,4 @@ char	*expand_variables(char *str, t_shell *shell)
 	}
 	process_remaining_text(str, i, start, &result);
 	return (result);
-} 
+}

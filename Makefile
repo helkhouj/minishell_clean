@@ -27,7 +27,6 @@ SRCS = main.c \
 	builtins.c \
 	builtins2.c \
 	builtins3.c \
-	redirections.c \
 	redirections2.c \
 	signals.c \
 	error.c
