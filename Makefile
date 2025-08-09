@@ -21,6 +21,8 @@ SRCS = main.c \
 	parser.c \
 	parser2.c \
     parser3.c \
+    parser4.c \
+    parser3.c \
 	environment.c \
 	environment2.c \
     environment3.c \

@@ -113,6 +113,9 @@ t_cmd		*create_cmd(void);
 void		add_redir_to_list(t_redir **redirs, t_redir *new_redir);
 void		push_arg(char **args, int *arg_count, char *value);
 void		handle_redirection_token(t_token **current, t_redir **redirs);
+int			alloc_cmd_and_args(t_ast **node, char ***args);
+void		process_token(t_token **current, char ***args,
+			int *arg_count, t_redir **redirs);
 
 /* Environment functions */
 t_env		*init_env(char **envp);
