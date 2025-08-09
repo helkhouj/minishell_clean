@@ -26,6 +26,30 @@ static void	cleanup_shell(t_shell *shell)
 	close(shell->stdout_fd);
 }
 
+static int	run_iteration(t_shell *shell)
+{
+    char	*input;
+
+    input = readline("minishell$ ");
+    if (!input)
+    {
+        printf("exit\n");
+        return (0);
+    }
+    if (g_signal == SIGINT)
+    {
+        shell->exit_code = 130;
+        g_signal = 0;
+    }
+    if (*input)
+    {
+        add_history(input);
+        process_input(input, shell);
+    }
+    free(input);
+    return (1);
+}
+
 static char	*expand_command_args(char **args, t_shell *shell)
 {
 	char	*expanded;
@@ -74,33 +98,14 @@ static void	process_input(char *input, t_shell *shell)
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_shell	shell;
-	char	*input;
+    t_shell	shell;
 
-	(void)argc;
-	(void)argv;
-	init_shell(&shell, envp);
-	setup_signals();
-	while (1)
-	{
-		input = readline("minishell$ ");
-		if (!input)
-		{
-			printf("exit\n");
-			break ;
-		}
-		if (g_signal == SIGINT)
-		{
-			shell.exit_code = 130;
-			g_signal = 0;
-		}
-		if (*input)
-		{
-			add_history(input);
-			process_input(input, &shell);
-		}
-		free(input);
-	}
-	cleanup_shell(&shell);
-	return (shell.exit_code);
+    (void)argc;
+    (void)argv;
+    init_shell(&shell, envp);
+    setup_signals();
+    while (run_iteration(&shell))
+        ;
+    cleanup_shell(&shell);
+    return (shell.exit_code);
 }
