@@ -10,46 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"
-static t_redir	*create_redir(t_node_type type, char *file)
-{
-	t_redir	*redir;
-
-	redir = malloc(sizeof(t_redir));
-	if (!redir)
-		return (NULL);
-	redir->type = type;
-	redir->file = ft_strdup(file);
-	redir->fd = -1;
-	redir->next = NULL;
-	return (redir);
-}
-
-static t_cmd	*create_cmd(void)
-{
-	t_cmd	*cmd;
-
-	cmd = malloc(sizeof(t_cmd));
-	if (!cmd)
-		return (NULL);
-	cmd->args = NULL;
-	cmd->redirs = NULL;
-	return (cmd);
-}
-
-static void	add_redir_to_list(t_redir **redirs, t_redir *new_redir)
-{
-	t_redir	*last;
-
-	if (*redirs)
-	{
-		last = *redirs;
-		while (last->next)
-			last = last->next;
-		last->next = new_redir;
-	}
-	else
-		*redirs = new_redir;
-}
 
 static t_ast	*parse_command(t_token **tokens)
 {
@@ -73,24 +33,11 @@ static t_ast	*parse_command(t_token **tokens)
 	current = *tokens;
 	while (current && current->type != TOKEN_PIPE && current->type != TOKEN_EOF)
 	{
-		if (current->type == TOKEN_WORD)
-		{
-			args[arg_count] = ft_strdup(current->value);
-			arg_count++;
-		}
-		else if (current->type >= TOKEN_REDIR_IN
-			&& current->type <= TOKEN_REDIR_HEREDOC)
-		{
-			current = current->next;
-			if (current && current->type == TOKEN_WORD)
-			{
-				t_redir	*new_redir;
-
-				new_redir = create_redir(current->type - TOKEN_REDIR_IN
-					+ NODE_REDIR_IN, current->value);
-				add_redir_to_list(&redirs, new_redir);
-			}
-		}
+        if (current->type == TOKEN_WORD)
+            push_arg(args, &arg_count, current->value);
+        else if (current->type >= TOKEN_REDIR_IN
+            && current->type <= TOKEN_REDIR_HEREDOC)
+            handle_redirection_token(&current, &redirs);
 		current = current->next;
 	}
 	args[arg_count] = NULL;

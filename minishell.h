@@ -109,6 +109,11 @@ t_token_type	get_operator_type(char **input);
 t_ast		*parse(t_token *tokens);
 void		free_ast(t_ast *ast);
 t_ast		*create_ast_node(t_node_type type);
+t_redir		*create_redir(t_node_type type, char *file);
+t_cmd		*create_cmd(void);
+void		add_redir_to_list(t_redir **redirs, t_redir *new_redir);
+void		push_arg(char **args, int *arg_count, char *value);
+void		handle_redirection_token(t_token **current, t_redir **redirs);
 
 /* Environment functions */
 t_env		*init_env(char **envp);

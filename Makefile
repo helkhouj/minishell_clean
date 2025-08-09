@@ -20,6 +20,7 @@ SRCS = main.c \
     tokenizer_helpers.c \
 	parser.c \
 	parser2.c \
+    parser3.c \
 	environment.c \
 	environment2.c \
     environment3.c \
