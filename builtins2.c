@@ -59,32 +59,25 @@ static int	is_valid_identifier(char *str)
 
 static int	process_export_arg(char *arg, t_shell *shell)
 {
-	char	*equals;
-	char	*key;
-	char	*value;
+    char	*equals;
+    char	*key;
+    char	*value;
 
-	equals = ft_strchr(arg, '=');
-	if (equals)
-	{
-		key = ft_substr(arg, 0, equals - arg);
-		value = ft_strdup(equals + 1);
-	}
-	else
-	{
-		key = ft_strdup(arg);
-		value = ft_strdup("");
-	}
-	if (!is_valid_identifier(key))
-	{
-		print_error("export", "not a valid identifier");
-		free(key);
-		free(value);
-		return (1);
-	}
-	shell->env = set_env_value(shell->env, key, value);
-	free(key);
-	free(value);
-	return (0);
+    equals = ft_strchr(arg, '=');
+    if (equals)
+    {
+        key = ft_substr(arg, 0, equals - arg);
+        value = ft_strdup(equals + 1);
+    }
+    else
+    {
+        key = ft_strdup(arg);
+        value = ft_strdup("");
+    }
+    if (!is_valid_identifier(key))
+        return (free(key), free(value), print_error("export", "not a valid identifier"), 1);
+    shell->env = set_env_value(shell->env, key, value);
+    return (free(key), free(value), 0);
 }
 
 int	builtin_export(char **args, t_shell *shell)

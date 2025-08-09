@@ -100,6 +100,10 @@ typedef struct s_shell
 t_token		*tokenize(char *input);
 void		free_tokens(t_token *tokens);
 t_token		*create_token(t_token_type type, char *value);
+t_token		*create_token(t_token_type type, char *value);
+void		add_token(t_token **tokens, t_token *new_token);
+char		*extract_quoted_string(char **input, char quote);
+t_token_type	get_operator_type(char **input);
 
 /* Parser functions */
 t_ast		*parse(t_token *tokens);
@@ -134,9 +138,11 @@ int			builtin_unset(char **args, t_shell *shell);
 int			builtin_exit(char **args, t_shell *shell);
 
 /* Redirection functions */
+int			open_input_file(char *filename);
+int			open_output_file(char *filename, int append);
+int			handle_heredoc(char *delimiter);
 int			setup_redirections(t_redir *redirs);
 void		restore_redirections(int stdin_fd, int stdout_fd);
-int			handle_heredoc(char *delimiter);
 
 /* Signal functions */
 void		setup_signals(void);
