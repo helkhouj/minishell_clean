@@ -3,13 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   executor2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: student <student@student.42.fr>            +#+  +:+       +#+        */
+/*   By: helkhouj <helkhouj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 10:00:00 by student           #+#    #+#             */
-/*   Updated: 2024/01/15 10:00:00 by student          ###   ########.fr       */
+/*   Updated: 2025/08/09 09:59:14 by helkhouj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "minishell.h"
 
 static int	count_env_vars(t_env *env)
 {
