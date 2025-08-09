@@ -10,7 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"
-int	g_signal = 0;
+
+int			g_signal = 0;
 
 void	handle_sigint(int sig)
 {
@@ -33,4 +34,3 @@ void	setup_signals(void)
 	signal(SIGINT, handle_sigint);
 	signal(SIGQUIT, handle_sigquit);
 }
-

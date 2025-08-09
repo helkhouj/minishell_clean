@@ -13,11 +13,11 @@
 
 static t_ast	*parse_command(t_token **tokens)
 {
-	t_ast		*node;
-	t_token		*current;
-	char		**args;
-	int			arg_count;
-	t_redir		*redirs;
+	t_ast	*node;
+	t_token	*current;
+	char	**args;
+	int		arg_count;
+	t_redir	*redirs;
 
 	node = create_ast_node(NODE_COMMAND);
 	if (!node)
@@ -33,11 +33,11 @@ static t_ast	*parse_command(t_token **tokens)
 	current = *tokens;
 	while (current && current->type != TOKEN_PIPE && current->type != TOKEN_EOF)
 	{
-        if (current->type == TOKEN_WORD)
-            push_arg(args, &arg_count, current->value);
-        else if (current->type >= TOKEN_REDIR_IN
-            && current->type <= TOKEN_REDIR_HEREDOC)
-            handle_redirection_token(&current, &redirs);
+		if (current->type == TOKEN_WORD)
+			push_arg(args, &arg_count, current->value);
+		else if (current->type >= TOKEN_REDIR_IN
+				&& current->type <= TOKEN_REDIR_HEREDOC)
+			handle_redirection_token(&current, &redirs);
 		current = current->next;
 	}
 	args[arg_count] = NULL;
@@ -72,5 +72,4 @@ t_ast	*parse(t_token *tokens)
 		left = pipe_node;
 	}
 	return (left);
-} 
-
+}

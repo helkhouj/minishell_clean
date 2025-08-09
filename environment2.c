@@ -60,5 +60,3 @@ t_env	*set_env_value(t_env *env, char *key, char *value)
 	current->next = new_node;
 	return (env);
 }
-
- 

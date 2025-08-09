@@ -85,6 +85,3 @@ int	execute_command(t_ast *ast, t_shell *shell)
 	free(cmd_path);
 	return (1);
 }
-
-
-

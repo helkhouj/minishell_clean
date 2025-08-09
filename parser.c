@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"
+
 t_ast	*create_ast_node(t_node_type type)
 {
 	t_ast	*node;
@@ -49,4 +50,3 @@ void	free_ast(t_ast *ast)
 	free_ast(ast->right);
 	free(ast);
 }
-

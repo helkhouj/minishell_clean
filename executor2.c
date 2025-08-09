@@ -69,4 +69,4 @@ int	execute_ast(t_ast *ast, t_shell *shell)
 	else if (ast->type == NODE_PIPE)
 		return (execute_pipeline(ast, shell));
 	return (0);
-} 
+}

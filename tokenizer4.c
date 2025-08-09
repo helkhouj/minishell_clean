@@ -45,9 +45,9 @@ static void	process_word(char **input, t_token **tokens)
 	char	*word;
 
 	word_start = *input;
-	while (**input && **input != ' ' && **input != '\t'
-		&& **input != '|' && **input != '<' && **input != '>'
-		&& **input != '\'' && **input != '"')
+	while (**input && **input != ' ' && **input != '\t' && **input != '|'
+		&& **input != '<' && **input != '>' && **input != '\''
+		&& **input != '"')
 		(*input)++;
 	word = ft_substr(word_start, 0, *input - word_start);
 	add_token(tokens, create_token(TOKEN_WORD, word));

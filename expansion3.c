@@ -23,8 +23,8 @@ static char	*get_var_name(char *str, int *len)
 		return (ft_strdup("?"));
 	}
 	while (str[i] && (str[i] == '_' || (str[i] >= 'A' && str[i] <= 'Z')
-		|| (str[i] >= 'a' && str[i] <= 'z')
-		|| (str[i] >= '0' && str[i] <= '9')))
+			|| (str[i] >= 'a' && str[i] <= 'z') || (str[i] >= '0'
+				&& str[i] <= '9')))
 		i++;
 	*len = i;
 	if (i == 0)
@@ -53,7 +53,7 @@ static char	*get_var_value(char *var_name, t_shell *shell)
 	return (ft_strdup(value));
 }
 
-char		*expand_single_var(char *str, int *pos, t_shell *shell)
+char	*expand_single_var(char *str, int *pos, t_shell *shell)
 {
 	char	*var_name;
 	char	*var_value;

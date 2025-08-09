@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"
+
 static void	init_shell(t_shell *shell, char **envp)
 {
 	shell->env = init_env(envp);
@@ -103,4 +104,3 @@ int	main(int argc, char **argv, char **envp)
 	cleanup_shell(&shell);
 	return (shell.exit_code);
 }
-

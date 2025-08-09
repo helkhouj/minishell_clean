@@ -42,15 +42,15 @@ static int	is_valid_identifier(char *str)
 
 	if (!str || !str[0])
 		return (0);
-	if (!((str[0] >= 'a' && str[0] <= 'z')
-		|| (str[0] >= 'A' && str[0] <= 'Z') || str[0] == '_'))
+	if (!((str[0] >= 'a' && str[0] <= 'z') || (str[0] >= 'A' && str[0] <= 'Z')
+			|| str[0] == '_'))
 		return (0);
 	i = 1;
 	while (str[i])
 	{
-		if (!((str[i] >= 'a' && str[i] <= 'z')
-			|| (str[i] >= 'A' && str[i] <= 'Z')
-			|| (str[i] >= '0' && str[i] <= '9') || str[i] == '_'))
+		if (!((str[i] >= 'a' && str[i] <= 'z') || (str[i] >= 'A'
+					&& str[i] <= 'Z') || (str[i] >= '0' && str[i] <= '9')
+				|| str[i] == '_'))
 			return (0);
 		i++;
 	}
@@ -59,25 +59,26 @@ static int	is_valid_identifier(char *str)
 
 static int	process_export_arg(char *arg, t_shell *shell)
 {
-    char	*equals;
-    char	*key;
-    char	*value;
+	char	*equals;
+	char	*key;
+	char	*value;
 
-    equals = ft_strchr(arg, '=');
-    if (equals)
-    {
-        key = ft_substr(arg, 0, equals - arg);
-        value = ft_strdup(equals + 1);
-    }
-    else
-    {
-        key = ft_strdup(arg);
-        value = ft_strdup("");
-    }
-    if (!is_valid_identifier(key))
-        return (free(key), free(value), print_error("export", "not a valid identifier"), 1);
-    shell->env = set_env_value(shell->env, key, value);
-    return (free(key), free(value), 0);
+	equals = ft_strchr(arg, '=');
+	if (equals)
+	{
+		key = ft_substr(arg, 0, equals - arg);
+		value = ft_strdup(equals + 1);
+	}
+	else
+	{
+		key = ft_strdup(arg);
+		value = ft_strdup("");
+	}
+	if (!is_valid_identifier(key))
+		return (free(key), free(value), print_error("export",
+				"not a valid identifier"), 1);
+	shell->env = set_env_value(shell->env, key, value);
+	return (free(key), free(value), 0);
 }
 
 int	builtin_export(char **args, t_shell *shell)

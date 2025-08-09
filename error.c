@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"
+
 void	ft_putstr_fd(char *s, int fd)
 {
 	if (!s)
@@ -60,4 +61,3 @@ void	print_error(char *cmd, char *msg)
 	}
 	ft_putendl_fd(msg, STDERR_FILENO);
 }
-

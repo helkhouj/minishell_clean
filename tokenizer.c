@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 #include "minishell.h"
+
 t_token	*create_token(t_token_type type, char *value)
 {
 	t_token	*token;
@@ -38,4 +39,3 @@ void	free_tokens(t_token *tokens)
 		current = next;
 	}
 }
-
