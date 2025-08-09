@@ -50,6 +50,19 @@ static int	setup_heredoc_redirection(char *file)
 	return (0);
 }
 
+static int	setup_one_redirection(t_redir *node)
+{
+    if (node->type == NODE_REDIR_IN)
+        return (setup_input_redirection(node->file));
+    if (node->type == NODE_REDIR_OUT)
+        return (setup_output_redirection(node->file, 0));
+    if (node->type == NODE_REDIR_APPEND)
+        return (setup_output_redirection(node->file, 1));
+    if (node->type == NODE_REDIR_HEREDOC)
+        return (setup_heredoc_redirection(node->file));
+    return (0);
+}
+
 int	setup_redirections(t_redir *redirs)
 {
 	t_redir	*current;
@@ -57,26 +70,8 @@ int	setup_redirections(t_redir *redirs)
 	current = redirs;
 	while (current)
 	{
-		if (current->type == NODE_REDIR_IN)
-		{
-			if (setup_input_redirection(current->file) == -1)
-				return (-1);
-		}
-		else if (current->type == NODE_REDIR_OUT)
-		{
-			if (setup_output_redirection(current->file, 0) == -1)
-				return (-1);
-		}
-		else if (current->type == NODE_REDIR_APPEND)
-		{
-			if (setup_output_redirection(current->file, 1) == -1)
-				return (-1);
-		}
-		else if (current->type == NODE_REDIR_HEREDOC)
-		{
-			if (setup_heredoc_redirection(current->file) == -1)
-				return (-1);
-		}
+        if (setup_one_redirection(current) == -1)
+            return (-1);
 		current = current->next;
 	}
 	return (0);

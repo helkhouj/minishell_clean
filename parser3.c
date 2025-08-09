@@ -65,9 +65,9 @@ void	handle_redirection_token(t_token **current, t_redir **redirs)
 	*current = (*current)->next;
 	if (*current && (*current)->type == TOKEN_WORD)
 	{
-		new_redir = create_redir((*current)->type - TOKEN_REDIR_IN
-				+ NODE_REDIR_IN,
-									(*current)->value);
+    new_redir = create_redir(
+            (*current)->type - TOKEN_REDIR_IN + NODE_REDIR_IN,
+            (*current)->value);
 		add_redir_to_list(redirs, new_redir);
 	}
 }

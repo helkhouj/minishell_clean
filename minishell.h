@@ -100,7 +100,6 @@ typedef struct s_shell
 t_token		*tokenize(char *input);
 void		free_tokens(t_token *tokens);
 t_token		*create_token(t_token_type type, char *value);
-t_token		*create_token(t_token_type type, char *value);
 void		add_token(t_token **tokens, t_token *new_token);
 char		*extract_quoted_string(char **input, char quote);
 t_token_type	get_operator_type(char **input);

@@ -14,7 +14,10 @@
 static void	setup_child_pipe(int pipe_fd[2], int read_end, int write_end)
 {
 	close(pipe_fd[read_end]);
-	dup2(pipe_fd[write_end], write_end == 1 ? STDOUT_FILENO : STDIN_FILENO);
+	if (write_end == 1)
+		dup2(pipe_fd[write_end], STDOUT_FILENO);
+	else
+		dup2(pipe_fd[write_end], STDIN_FILENO);
 	close(pipe_fd[write_end]);
 }
 
