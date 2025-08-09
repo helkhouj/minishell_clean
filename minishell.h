@@ -125,6 +125,7 @@ char		**env_to_array(t_env *env);
 
 /* Expansion functions */
 char		*expand_variables(char *str, t_shell *shell);
+char		*expand_single_var(char *str, int *pos, t_shell *shell);
 
 /* Execution functions */
 int			execute_ast(t_ast *ast, t_shell *shell);

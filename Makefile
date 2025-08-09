@@ -32,7 +32,8 @@ SRCS = main.c \
 	builtins3.c \
     redirections3.c \
     redirections4.c \
-	expansion3.c \
+    expansion3.c \
+    expansion4.c \
 	signals.c \
 	error.c
 
